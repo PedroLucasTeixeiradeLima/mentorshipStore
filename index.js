@@ -1,4 +1,5 @@
 const express = require('express');
+const { uuid } = require('uuidv4');
 
 const app = express();
 
@@ -14,9 +15,12 @@ const products = [];
 
 // POST always have = BODY -> all the data comes in body
 router.post('/product', (request, response) => {
-  const body = request.body;
-  
-  products.push(body);
+  const { body } = request;
+
+  products.push({
+    id: uuid(),
+    ...body
+  });
 
   response.status(201).send();
 });
