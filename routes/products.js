@@ -12,8 +12,9 @@ router.post('/product', (request, response) => {
   return response.status(201).send(product);
 });
 
-router.get('/product', (request, response) => {
-  return response.send(productsController.getAllProducts());
+router.get('/product', async (request, response) => {
+  const products = await productsController.getAllProducts()
+  return response.send(products);
 })
 
 router.get('/product/:id', (request, response) => {

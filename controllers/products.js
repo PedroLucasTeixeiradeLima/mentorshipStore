@@ -1,4 +1,6 @@
 const { uuid } = require('uuidv4');
+const { client } = require('../services/postgres');
+
 
 let products = [];
 
@@ -13,8 +15,8 @@ function createProduct(product){
   return products;
 }
 
-function getAllProducts(){
-  return products;
+async function getAllProducts(){
+  return await client.query('SELECT * FROM products')
 }
 
 function getProductById(id){
