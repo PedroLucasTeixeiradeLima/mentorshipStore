@@ -2,60 +2,62 @@ const { uuid } = require('uuidv4');
 const { client } = require('../services/postgres');
 
 
-let products = [];
 
-
-function createProduct(product){
-  
-  products.push({
-    id: uuid(),
-    ...product
-  });
-
-  return products;
+async function createProduct(product){
+  const { title, description, quantity, price } = product
+  try{
+    await client.query("INSERT INTO products (title, description, quantity, price) VALUES ($1, $2, $3, $4)", [title, description, quantity, price])
+    const response = await client.query('SELECT * FROM products')
+    const products = response.rows
+    return products
+  }catch(e){
+    throw e
+  }
 }
 
 async function getAllProducts(){
-  return await client.query('SELECT * FROM products')
+  const response = await client.query('SELECT * FROM products')
+  const products = response.rows
+  return products
 }
 
-function getProductById(id){
-  const product = products.find((product) => product.id === id)
-  return product;
-}
-
-function deleteProduct(id){
-  const deletedProduct = products.find((product) => product.id === id)
-
-  if(!deletedProduct) {
-    return products;
-    //return response.status(401).send(products);
-  }
-  const filteredProducts = products.filter((product) => product.id !== id)
-  products = filteredProducts
-  return deletedProduct;
-}
-function updateProduct(id, title, description, quantity, price){
-  const updatedProducts = products.map((product) => {
-    // return something
-    if (product.id === id) {
-      // Update the product
-
-      const newProduct = {
-        id: id,
-        title: title,
-        description: description,
-        quantity: quantity,
-        price: price
-      }
-      
-      return newProduct
-    }
-
+async function getProductById(id){
+  try{
+    const response = await client.query("SELECT * FROM products WHERE product_id = $1", [id])
+    const product = response.rows
     return product;
-  });
-  products = updatedProducts;
-  return products;
+  }catch(e){
+    throw e
+  }
+}
+
+async function deleteProduct(id){
+  try{
+    await client.query("DELETE FROM products WHERE product_id = $1", [id])
+    const response = await client.query('SELECT * FROM products')
+    const products = response.rows
+    return products
+  }catch(e){
+    throw e
+  }
+
+}
+async function updateProduct(body){
+  const {
+    id,
+    title,
+    description,
+    quantity,
+    price
+  } = body;
+  try{
+    await client.query("UPDATE products SET title = $1, description = $2, quantity = $3, price = $4 WHERE product_id = $5", [title, description, quantity, price, id])
+    const response = await client.query("SELECT * FROM products WHERE product_id = $1", [id])
+    const product = response.rows
+    return product
+  }catch(e){
+    throw e
+  }
 }
 
 module.exports = {
