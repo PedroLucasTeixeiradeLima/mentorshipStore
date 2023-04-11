@@ -1,5 +1,10 @@
 <script>
+import ProductComponent from './components/ProductComponent.vue';
+
 export default {
+  components: {
+    ProductComponent
+  },
   data(){
     return{
       // THIS WILL BE RETURNED FROM OUR API
@@ -46,37 +51,19 @@ export default {
 </script>
 
 <template>
-  <div v-for="product in products" :key="product.id" class="card-container">
-    <div class="card-header">
-      <h2>{{ product.title }}</h2>
-      <button>X</button>
-    </div>
-
-    <p class="card-description">{{ product.description }}</p>
-
-    <div class="card-footer">
-      <span>R$ {{ product.price }}</span>
-      <span>Qty: {{ product.quantity }}</span>
-    </div>
-  </div>
+  <ProductComponent 
+    v-for="product in products" 
+    :key="product.id"
+    :title="product.title"
+    :description="product.description"
+    :price="product.price"
+    :quantity="product.quantity"
+  />
 </template>
 
 
 
 <style scoped>
-.card-container {
-  padding: 10px;
-  border: 1px solid black;
-  border-radius: 5px;
-  min-width: 300px;
-  margin: 10px;
-}
-.card-header, .card-footer {
-  display: flex;
-  justify-content: space-between;
-}
-
-
 header {
   line-height: 1.5;
 }
