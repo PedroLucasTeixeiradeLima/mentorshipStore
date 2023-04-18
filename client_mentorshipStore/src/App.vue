@@ -8,44 +8,16 @@ export default {
   data(){
     return{
       // THIS WILL BE RETURNED FROM OUR API
-      products: [
-        {
-          id: 1,
-          title: 'Mocked product 1',
-          description: 'Mocked description 1',
-          price: 10,
-          quantity: 12
-        },
-        {
-          id: 2,
-          title: 'Mocked product 2',
-          description: 'Mocked description 2',
-          price: 10,
-          quantity: 12
-        },
-        {
-          id: 3,
-          title: 'Mocked product 3',
-          description: 'Mocked description 3',
-          price: 10,
-          quantity: 12
-        },
-        {
-          id: 4,
-          title: 'Mocked product 4',
-          description: 'Mocked description 4',
-          price: 10,
-          quantity: 12
-        },
-        {
-          id: 5,
-          title: 'Mocked product 5',
-          description: 'Mocked description 5',
-          price: 10,
-          quantity: 12
-        }
-      ]
+      products: []
     }
+  },
+  mounted() {
+    // Inside it we can add any function to be executed after the component is mounted
+    fetch('http://localhost:8000/product')
+    .then(res => res.json())
+    .then(res => {
+      this.products = res;
+    })
   }
 }
 </script>
