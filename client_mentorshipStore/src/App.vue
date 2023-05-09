@@ -13,7 +13,7 @@ export default {
   },
   mounted() {
     // Inside it we can add any function to be executed after the component is mounted
-    fetch('http://localhost:8000/product')
+    fetch('https://mentorship-store.onrender.com/product')
     .then(res => res.json())
     .then(res => {
       this.products = res;
