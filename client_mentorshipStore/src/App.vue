@@ -1,5 +1,6 @@
 <script>
 import ProductComponent from './components/ProductComponent.vue';
+import { RouterLink } from 'vue-router'
 
 export default {
   components: {
@@ -8,7 +9,8 @@ export default {
   data(){
     return{
       // THIS WILL BE RETURNED FROM OUR API
-      products: []
+      products: [],
+      name: ""
     }
   },
   mounted() {
@@ -31,6 +33,11 @@ export default {
     :price="product.price"
     :quantity="product.quantity"
   />
+  <p>{{ name }}</p>
+  <form>
+    <input v-model="name" placeholder="Insert Here"/>
+  </form>
+  <RouterLink to="/create-product">Create New Product</RouterLink>
 </template>
 
 
