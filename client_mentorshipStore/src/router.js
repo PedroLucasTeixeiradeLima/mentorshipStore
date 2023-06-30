@@ -1,14 +1,14 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import App from './App.vue'
-import CreateProduct from './pages/CreateProduct.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import CreateProduct from './pages/CreateProduct.vue';
+import HomePage from './pages/HomePage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'App',
-      component: App
+      name: 'Home',
+      component: HomePage
     },
     {
       path: '/create-product',
@@ -16,6 +16,6 @@ const router = createRouter({
       component: CreateProduct
     }
   ]
-})
+});
 
-export default router
+export default router;
